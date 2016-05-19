@@ -50,14 +50,14 @@ sudo usermod -a -G www-data vagrant
 # if not installed
 sudo a2dismod mpm_prefork mpm_worker
 sudo a2dismod php5
-sudo a2enmod rewrite actions #ssl
+sudo a2enmod rewrite actions ssl
 curl --silent -L $github_url/helpers/vhost.sh > vhost
 sudo chmod guo+x vhost
 sudo mv vhost /usr/local/bin
 
 # Create a virtualhost to start, with SSL certificate
-# sudo vhost -s $1.xip.io -d $public_folder -p /etc/ssl/xip.io -c xip.io -a $3
-# sudo a2dissite 000-default
+sudo vhost -s $1.xip.io -d $public_folder -p /etc/ssl/xip.io -c xip.io -a $3
+sudo a2dissite 000-default
 
 # If PHP is installed or HHVM is installed, proxy PHP requests to it
 if [[ $PHP_IS_INSTALLED -eq 0 || $HHVM_IS_INSTALLED -eq 0 ]]; then
