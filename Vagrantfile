@@ -26,6 +26,8 @@ mysql_root_password   = "root"   # We'll assume user "root"
 mysql_version         = "5.5"    # Options: 5.5 | 5.6
 mysql_enable_remote   = "false"  # remote access enabled when true
 
+database_name         = "vagrant"
+
 # Languages and Packages
 php_timezone          = "UTC"    # http://php.net/manual/en/timezones.php
 php_version           = "5.6"    # Options: 5.5 | 5.6
@@ -212,6 +214,6 @@ Vagrant.configure(2) do |config|
   ############################################################
 
   # Setup Database
-  config.vm.provision "shell", path: "#{github_url}/scripts/database-setup.sh"
+  config.vm.provision "shell", path: "#{github_url}/scripts/database-setup.sh", args: [database_name]
 
 end

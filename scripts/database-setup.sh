@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
 
-#clean up first
-echo "Droping local_database if it already exists.";
-mysql -uroot -proot -e "DROP DATABASE IF EXISTS local_database";
+DATABASE_NAME=$1
 
-echo "Creating new local_database";
-mysql -uroot -proot -e "create database local_database";
+#clean up first
+echo "Droping $DATABASE_NAME if it already exists.";
+mysql -uroot -proot -e "DROP DATABASE IF EXISTS $DATABASE_NAME";
+
+echo "Creating new $DATABASE_NAME";
+mysql -uroot -proot -e "create database $DATABASE_NAME";
 
 cd /vagrant;
 
