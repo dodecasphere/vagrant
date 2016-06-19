@@ -9,7 +9,7 @@ github_url      = "https://raw.githubusercontent.com/#{github_username}/#{github
 
 # Because this:https://developer.github.com/changes/2014-12-08-removing-authorizations-token/
 # https://github.com/settings/tokens
-github_pat          = "90276bd55a093e64e982bc9ec35bab8764d5fa41"
+github_pat          = ""
 
 # Hostname
 hostname        = "vagrant.dev"
