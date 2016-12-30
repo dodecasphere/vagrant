@@ -19,15 +19,15 @@ sudo apt-get update
 sudo apt-get install -qq php$PHP_VERSION-cli php$PHP_VERSION-fpm php$PHP_VERSION-mysql php$PHP_VERSION-pgsql php$PHP_VERSION-sqlite php$PHP_VERSION-curl php$PHP_VERSION-gd php$PHP_VERSION-gmp php$PHP_VERSION-mcrypt php$PHP_VERSION-memcached php$PHP_VERSION-imagick php$PHP_VERSION-intl php$PHP_VERSION-xdebug
 
 # Set PHP FPM to listen on TCP instead of Socket
-sudo sed -i "s/listen =.*/listen = 127.0.0.1:9000/" /etc/php/$PHP_VERSION/fpm/pool.d/www.conf
+# sudo sed -i "s/listen =.*/listen = 127.0.0.1:9000/" /etc/php/$PHP_VERSION/fpm/pool.d/www.conf
 
 # Set PHP FPM allowed clients IP address
 sudo sed -i "s/;listen.allowed_clients/listen.allowed_clients/" /etc/php/$PHP_VERSION/fpm/pool.d/www.conf
 
 # Set run-as user for PHP5-FPM processes to user/group "vagrant"
 # to avoid permission errors from apps writing to files
-sudo sed -i "s/user = www-data/user = vagrant/" /etc/php/$PHP_VERSION/fpm/pool.d/www.conf
-sudo sed -i "s/group = www-data/group = vagrant/" /etc/php/$PHP_VERSION/fpm/pool.d/www.conf
+# sudo sed -i "s/user = www-data/user = vagrant/" /etc/php/$PHP_VERSION/fpm/pool.d/www.conf
+# sudo sed -i "s/group = www-data/group = vagrant/" /etc/php/$PHP_VERSION/fpm/pool.d/www.conf
 
 sudo sed -i "s/listen\.owner.*/listen.owner = vagrant/" /etc/php/$PHP_VERSION/fpm/pool.d/www.conf
 sudo sed -i "s/listen\.group.*/listen.group = vagrant/" /etc/php/$PHP_VERSION/fpm/pool.d/www.conf
