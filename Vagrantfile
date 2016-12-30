@@ -30,7 +30,7 @@ database_name         = "#{my_name}"
 
 # Languages and Packages
 php_timezone          = "UTC"    # http://php.net/manual/en/timezones.php
-php_version           = "7.1"    # Options: 5.5 | 5.6
+php_version           = "7.0"    # Options: 5.5 | 5.6
 
 # PHP Options
 composer_packages     = [        # List any global Composer packages that you want to install

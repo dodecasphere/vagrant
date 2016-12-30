@@ -51,7 +51,7 @@ server {
 }
 EOF
 
-sudo service nginx start
+sudo service nginx restart
 
 # clean /var/www
 sudo rm -Rf /var/www
