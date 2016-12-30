@@ -11,10 +11,6 @@ github_repo     = "vagrant"
 github_branch   = "master"
 github_url      = "https://raw.githubusercontent.com/#{github_username}/#{github_repo}/#{github_branch}"
 
-# Because this:https://developer.github.com/changes/2014-12-08-removing-authorizations-token/
-# https://github.com/settings/tokens
-github_pat          = ""
-
 # Hostname
 hostname        = "#{my_name}.dev"
 
@@ -34,10 +30,7 @@ database_name         = "#{my_name}"
 
 # Languages and Packages
 php_timezone          = "UTC"    # http://php.net/manual/en/timezones.php
-php_version           = "5.6"    # Options: 5.5 | 5.6
-
-# To install HHVM instead of PHP, set this to "true"
-hhvm                  = "false"
+php_version           = "7.1"    # Options: 5.5 | 5.6
 
 # PHP Options
 composer_packages     = [        # List any global Composer packages that you want to install
@@ -86,7 +79,7 @@ Vagrant.configure(2) do |config|
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
   # config.vm.network "forwarded_port", guest: 80, host: 8080
-  config.vm.network :forwarded_port, guest: 80, host: "80#{ip_port}"
+  config.vm.network :forwarded_port, guest: 80, host: "80#{ip_port}", id: "nginx"
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
@@ -159,10 +152,10 @@ Vagrant.configure(2) do |config|
   config.vm.provision "shell", path: "#{github_url}/scripts/base_box_optimizations.sh", privileged: true
 
   # Provision PHP
-  config.vm.provision "shell", path: "#{github_url}/scripts/php.sh", args: [php_timezone, hhvm, php_version]
+  config.vm.provision "shell", path: "#{github_url}/scripts/php.sh", args: [php_timezone, php_version]
 
-  # Provision Apache Base
-  config.vm.provision "shell", path: "#{github_url}/scripts/apache.sh", args: [server_ip, public_folder, hostname, github_url]
+  # Provision nginx Base
+  config.vm.provision "shell", path: "#{github_url}/scripts/nginx.sh", args: [server_ip, public_folder, hostname]
 
   # Provision MySQL
   config.vm.provision "shell", path: "#{github_url}/scripts/mysql.sh", args: [mysql_root_password, mysql_version, mysql_enable_remote]
@@ -172,22 +165,7 @@ Vagrant.configure(2) do |config|
 
   # Provision Composer
   # You may pass a github auth token as the first argument
-  config.vm.provision "shell", path: "#{github_url}/scripts/composer.sh", privileged: false, args: [github_pat, composer_packages.join(" ")]
-
-  # Define a Vagrant Push strategy for pushing to Atlas. Other push strategies
-  # such as FTP and Heroku are also available. See the documentation at
-  # https://docs.vagrantup.com/v2/push/atlas.html for more information.
-  # config.push.define "atlas" do |push|
-  #   push.app = "YOUR_ATLAS_USERNAME/YOUR_APPLICATION_NAME"
-  # end
-
-  # Enable provisioning with a shell script. Additional provisioners such as
-  # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
-  # documentation for more information about their specific syntax and use.
-  # config.vm.provision "shell", inline: <<-SHELL
-  #   sudo apt-get update
-  #   sudo apt-get install -y apache2
-  # SHELL
+  config.vm.provision "shell", path: "#{github_url}/scripts/composer.sh", privileged: false, args: [composer_packages.join(" ")]
 
   ############################################################
   # Oh My ZSH Install section
@@ -201,15 +179,15 @@ Vagrant.configure(2) do |config|
     inline: "git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh"
 
   # Copy in the default .zshrc config file
-  config.vm.provision :shell, privileged: false,
-    inline: "cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc"
-
-  # Change the vagrant user's shell to use zsh
-  config.vm.provision :shell, inline: "chsh -s /bin/zsh vagrant"
+  # config.vm.provision :shell, privileged: false,
+  #   inline: "cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc"
 
   # Bring down the zshrc file
   config.vm.provision :shell, privileged: false,
     inline: "wget -O ~/.zshrc #{github_url}/shell/.zshrc"
+
+  # Change the vagrant user's shell to use zsh
+  config.vm.provision :shell, inline: "chsh -s /bin/zsh vagrant"
 
   # Bring down the theme file
   config.vm.provision :shell, privileged: false,
@@ -218,6 +196,6 @@ Vagrant.configure(2) do |config|
   ############################################################
 
   # Setup Database
-  config.vm.provision "shell", path: "#{github_url}/scripts/database-setup.sh", args: [database_name]
+  config.vm.provision "shell", path: "#{github_url}/scripts/database.sh", args: [database_name]
 
 end
