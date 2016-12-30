@@ -17,13 +17,13 @@ server_name="$3"
 # Install nginx
 # -qq implies -y --force-yes
 sudo apt-get install -qq nginx
-sudo service nginx start
+# sudo service nginx start
 
 # set up nginx server
 cat > /etc/nginx/sites-enabled/default << EOF
 server {
-    listen 80 $server_name;
-    listen [::]:80 $server_name ipv6only=on;
+    listen 80 default_server;
+    listen [::]:80 default_server ipv6only=on;
 
     root /var/www;
     index index.php index.html index.htm;
@@ -31,7 +31,7 @@ server {
     server_name $server_name;
 
     location / {
-        try_files $uri $uri/ =404;
+        try_files \$uri \$uri/ =404;
     }
 
     error_page 404 /404.html;
@@ -41,17 +41,17 @@ server {
     }
 
     location ~ \.php$ {
-        try_files $uri =404;
+        try_files \$uri =404;
         fastcgi_split_path_info ^(.+\.php)(/.+)$;
         fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
         fastcgi_index index.php;
-        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
         include fastcgi_params;
     }
 }
 EOF
 
-sudo service nginx restart
+sudo service nginx start
 
 # clean /var/www
 sudo rm -Rf /var/www
