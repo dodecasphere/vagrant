@@ -1,6 +1,10 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+my_name="my_name"
+ip_port="ip_port"
+# current_number=14
+
 # Config Github Settings
 github_username = "dodecasphere"
 github_repo     = "vagrant"
@@ -12,10 +16,10 @@ github_url      = "https://raw.githubusercontent.com/#{github_username}/#{github
 github_pat          = ""
 
 # Hostname
-hostname        = "vagrant.dev"
+hostname        = "#{my_name}.dev"
 
 # Server Configuration
-server_ip           = "192.168.22.10"
+server_ip           = "192.168.22.#{ip_port}"
 server_cpus         = "1"   # Cores
 server_memory       = "384" # MB
 server_swap         = "768" # Options: false | int (MB) - Guideline: Between one or two times the server_memory
@@ -23,10 +27,10 @@ server_timezone     = "UTC"
 
 # Database Configuration
 mysql_root_password   = "root"   # We'll assume user "root"
-mysql_version         = "5.5"    # Options: 5.5 | 5.6
+mysql_version         = "5.6"    # Options: 5.5 | 5.6
 mysql_enable_remote   = "false"  # remote access enabled when true
 
-database_name         = "vagrant"
+database_name         = "#{my_name}"
 
 # Languages and Packages
 php_timezone          = "UTC"    # http://php.net/manual/en/timezones.php
@@ -53,7 +57,7 @@ nodejs_packages       = [          # List any global NodeJS packages that you wa
 ]
 
 # Default web server document root
-public_folder         = "/vagrant/html"
+public_folder         = "/vagrant/public"
 
 # All Vagrant configuration is done below. The "2" in Vagrant.configure
 # configures the configuration version (we support older styles for
@@ -68,7 +72,7 @@ Vagrant.configure(2) do |config|
   # boxes at https://atlas.hashicorp.com/search.
   config.vm.box = "ubuntu/trusty64"
 
-  config.vm.define "VagrantBox" do |vboxed|
+  config.vm.define "#{my_name}Box" do |vboxed|
   end
 
   config.vm.hostname = hostname
@@ -82,7 +86,7 @@ Vagrant.configure(2) do |config|
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
   # config.vm.network "forwarded_port", guest: 80, host: 8080
-  config.vm.network :forwarded_port, guest: 80, host: 8000
+  config.vm.network :forwarded_port, guest: 80, host: "80#{ip_port}"
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.

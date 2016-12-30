@@ -32,7 +32,7 @@ export UPDATE_ZSH_DAYS=1
 DISABLE_CORRECTION="true"
 
 # Uncomment following line if you want red dots to be displayed while waiting for completion
-# COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="true"
 
 # Uncomment following line if you want to disable marking untracked files under
 # VCS as dirty. This makes repository status check for large repositories much,
@@ -46,8 +46,12 @@ plugins=(git composer sublime themes)
 
 source $ZSH/oh-my-zsh.sh
 
+if [[ -f ~/Dropbox/iTerm/aliases.sh ]]; then
+	source ~/Dropbox/iTerm/aliases.sh
+fi
+
 # Customize to your needs...
-export PATH=$PATH::/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/git/bin:/usr/local/share/npm/bin:~/.composer/vendor/bin
+export PATH=/usr/local/php5/bin:$PATH::/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/git/bin:/usr/local/share/npm/bin:~/.composer/vendor/bin
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
