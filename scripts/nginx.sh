@@ -51,6 +51,8 @@ server {
 }
 EOF
 
+sudo sed -i "s/user = www-data/user = vagrant/" /etc/nginx/nginx.conf
+
 sudo service nginx restart
 
 # clean /var/www

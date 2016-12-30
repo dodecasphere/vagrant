@@ -26,8 +26,8 @@ sudo sed -i "s/;listen.allowed_clients/listen.allowed_clients/" /etc/php/$PHP_VE
 
 # Set run-as user for PHP5-FPM processes to user/group "vagrant"
 # to avoid permission errors from apps writing to files
-# sudo sed -i "s/user = www-data/user = vagrant/" /etc/php/$PHP_VERSION/fpm/pool.d/www.conf
-# sudo sed -i "s/group = www-data/group = vagrant/" /etc/php/$PHP_VERSION/fpm/pool.d/www.conf
+sudo sed -i "s/user = www-data/user = vagrant/" /etc/php/$PHP_VERSION/fpm/pool.d/www.conf
+sudo sed -i "s/group = www-data/group = vagrant/" /etc/php/$PHP_VERSION/fpm/pool.d/www.conf
 
 sudo sed -i "s/listen\.owner.*/listen.owner = vagrant/" /etc/php/$PHP_VERSION/fpm/pool.d/www.conf
 sudo sed -i "s/listen\.group.*/listen.group = vagrant/" /etc/php/$PHP_VERSION/fpm/pool.d/www.conf
