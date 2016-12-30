@@ -39,6 +39,7 @@ ZSH_THEME_GIT_PROMPT_CLEAN="%{$purple%}]"
 
 PROMPT="\
 $(random_emoji)\
+%{$blue%}$(user_and_host)%{$reset_color%}\
 %{$limegreen%}$(path)%{$reset_color%}\
 %{$turquoise%}${git_info}%{$reset_color%}"
 # %{$blue%}$(user_and_host)%{$reset_color%}\
