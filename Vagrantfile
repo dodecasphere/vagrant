@@ -3,7 +3,7 @@
 
 my_name="my_name"
 ip_port="ip_port"
-# current_number=14
+# current_number=15
 
 # Config Github Settings
 github_username = "dodecasphere"

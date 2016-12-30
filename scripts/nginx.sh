@@ -11,8 +11,8 @@ fi
 server_name="$3"
 
 # Update Again
-sudo apt-key update
-sudo apt-get update
+# sudo apt-key update
+# sudo apt-get update
 
 # Install nginx
 # -qq implies -y --force-yes
@@ -55,6 +55,7 @@ sudo service nginx restart
 
 # clean /var/www
 sudo rm -Rf /var/www
+mkdir /var/www/public
 
 # symlink /var/www => /vagrant
 ln -s $public_folder /var/www/public
