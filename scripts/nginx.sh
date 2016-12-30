@@ -25,7 +25,7 @@ server {
     listen 80 $server_name;
     listen [::]:80 $server_name ipv6only=on;
 
-    root /var/www/public;
+    root /var/www;
     index index.php index.html index.htm;
 
     server_name $server_name;
@@ -55,7 +55,6 @@ sudo service nginx restart
 
 # clean /var/www
 sudo rm -Rf /var/www
-mkdir /var/www/public
 
 # symlink /var/www => /vagrant
-ln -s $public_folder /var/www/public
+ln -s $public_folder /var/www
