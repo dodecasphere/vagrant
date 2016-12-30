@@ -51,6 +51,8 @@ server {
 }
 EOF
 
+# Set run-as user for nginx to user "vagrant"
+# to avoid permission errors from apps writing to files
 sudo sed -i "s/user www-data/user vagrant/" /etc/nginx/nginx.conf
 
 sudo service nginx restart

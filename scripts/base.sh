@@ -81,3 +81,5 @@ shopt -u nocasematch
 
 # Enable cachefilesd
 echo "RUN=yes" > /etc/default/cachefilesd
+
+sudo sh -c "echo 'sleep 3' >> /etc/update-motd.d/20-sleep"
