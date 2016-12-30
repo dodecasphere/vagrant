@@ -36,7 +36,8 @@ sudo sed -i "s/listen\.mode.*/listen.mode = 0666/" /etc/php/$PHP_VERSION/fpm/poo
 
 # xdebug Config
 cat > $(find /etc/php/$PHP_VERSION -name xdebug.ini) << EOF
-zend_extension=$(find /usr/lib/php/$PHP_VERSION -name xdebug.so)
+; zend_extension=$(find /usr/lib/php/$PHP_VERSION -name xdebug.so)
+zend_extension=xdebug.so
 xdebug.remote_enable = 1
 xdebug.remote_connect_back = 1
 xdebug.remote_port = 9000
