@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+echo ">>> Installing Nginx"
+php_version = $(php --version | tail -r | tail -n 1 | cut -d ' ' -f 2 | cut -c 1,2,3)
+
+[[ -z $1 ]] && { echo "!!! IP address not set. Check the Vagrant file."; exit 1; }
 ip_address="$1"
 
 if [[ -z $2 ]]; then
@@ -41,9 +45,9 @@ server {
     }
 
     location ~ \.php$ {
-        try_files \$uri =404;
+        try_files $uri $uri/ /index.php\$is_args\$args;
         fastcgi_split_path_info ^(.+\.php)(/.+)$;
-        fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
+        fastcgi_pass unix:/var/run/php/php$php_version-fpm.sock;
         fastcgi_index index.php;
         fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
         include fastcgi_params;
@@ -54,6 +58,10 @@ EOF
 # Set run-as user for nginx to user "vagrant"
 # to avoid permission errors from apps writing to files
 sudo sed -i "s/user www-data/user vagrant/" /etc/nginx/nginx.conf
+sed -i "s/# server_names_hash_bucket_size.*/server_names_hash_bucket_size 64;/" /etc/nginx/nginx.conf
+
+# Add vagrant user to www-data group
+usermod -a -G www-data vagrant
 
 sudo service nginx restart
 
