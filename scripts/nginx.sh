@@ -35,7 +35,7 @@ server {
     server_name $server_name;
 
     location / {
-        try_files \$uri \$uri/ =404;
+        try_files \$uri \$uri/ /index.php\$is_args\$args;
     }
 
     error_page 404 /404.html;
@@ -45,9 +45,9 @@ server {
     }
 
     location ~ \.php$ {
-        try_files $uri $uri/ /index.php\$is_args\$args;
+        try_files \$uri =404;
         fastcgi_split_path_info ^(.+\.php)(/.+)$;
-        fastcgi_pass unix:/var/run/php/php$php_version-fpm.sock;
+        fastcgi_pass unix:/var/run/php/php$(php --version | tac | tail -n 1 | cut -d ' ' -f 2 | cut -c 1,2,3)-fpm.sock;
         fastcgi_index index.php;
         fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
         include fastcgi_params;
