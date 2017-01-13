@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 echo ">>> Installing Nginx"
-php_version = $(php --version | tail -r | tail -n 1 | cut -d ' ' -f 2 | cut -c 1,2,3)
+php_version = $(php --version | tac | tail -n 1 | cut -d ' ' -f 2 | cut -c 1,2,3)
 
 [[ -z $1 ]] && { echo "!!! IP address not set. Check the Vagrant file."; exit 1; }
 ip_address="$1"
